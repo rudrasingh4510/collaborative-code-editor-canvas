@@ -60,6 +60,7 @@ function Home() {
       style={{
         minHeight: "100vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#1f1f1f",
@@ -141,6 +142,25 @@ function Home() {
           Generate New Room
         </button>
       </div>
+
+      {/* Footer */}
+      <p
+        style={{
+          color: "#aaa",
+          marginTop: "20px",
+          fontSize: "13px",
+        }}
+      >
+        Made with ❤️ by{" "}
+        <a
+          href="https://github.com/rudrasingh4510"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#3b82f6", textDecoration: "none" }}
+        >
+          Rudra Singh
+        </a>
+      </p>
     </div>
   );
 }
