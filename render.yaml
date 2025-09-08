@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: realtime-code-editor
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://realtime-code-editor.onrender.com
+      - key: SERVER_URL
+        value: https://realtime-code-editor.onrender.com

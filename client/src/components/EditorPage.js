@@ -15,6 +15,7 @@ import { toast } from "react-hot-toast";
 function EditorPage() {
   const [clients, setClients] = useState([]);
   const [socketReady, setSocketReady] = useState(false);
+  const [currentUserSocketId, setCurrentUserSocketId] = useState(null);
   const codeRef = useRef(null);
 
   const Location = useLocation();
@@ -42,11 +43,21 @@ function EditorPage() {
       s.emit(ACTIONS.JOIN, {
         roomId,
         username: Location.state?.username,
+        userProfile: Location.state?.userProfile,
       });
 
-      s.on(ACTIONS.JOINED, ({ clients, username, socketId }) => {
+      s.on(ACTIONS.JOINED, ({ clients, username, socketId, userProfile }) => {
+        console.log('🔹 Received ACTIONS.JOINED:', {
+          username,
+          socketId,
+          userProfile,
+          clients: clients.map(c => ({ username: c.username, socketId: c.socketId, profile: c.profile }))
+        });
         if (username !== Location.state?.username) {
           toast.success(`${username} joined the room.`);
+        } else {
+          // This is the current user joining
+          setCurrentUserSocketId(socketId);
         }
         setClients(clients);
         s.emit(ACTIONS.SYNC_CODE, {
@@ -156,7 +167,12 @@ function EditorPage() {
           }}
         >
           {clients.map((client) => (
-            <Client key={client.socketId} username={client.username} />
+            <Client 
+              key={client.socketId} 
+              username={client.username} 
+              userProfile={client.profile}
+              isCurrentUser={client.socketId === currentUserSocketId}
+            />
           ))}
         </div>
         <hr style={{ margin: "1rem 0", borderColor: "#495057" }} />
@@ -227,6 +243,7 @@ function EditorPage() {
               socketRef={socketRef}
               roomId={roomId}
               onCodeChange={(code) => (codeRef.current = code)}
+              currentUserSocketId={currentUserSocketId}
             />
           </div>
         </div>
