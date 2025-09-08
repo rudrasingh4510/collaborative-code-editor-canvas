@@ -197,12 +197,16 @@ app.get('/api/profile-image', async (req, res) => {
   try {
     const { url } = req.query;
     
+    console.log('🔹 Profile image request received:', { url, userAgent: req.get('User-Agent') });
+    
     if (!url) {
+      console.log('❌ No URL parameter provided');
       return res.status(400).json({ error: 'URL parameter is required' });
     }
     
     // Validate that it's a Google profile picture URL
     if (!url.includes('googleusercontent.com')) {
+      console.log('❌ Invalid URL - not a Google profile picture:', url);
       return res.status(400).json({ error: 'Invalid URL - must be a Google profile picture' });
     }
     

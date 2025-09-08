@@ -1,5 +1,6 @@
 import React from 'react';
 import Avatar from 'react-avatar';
+import config from '../config';
 
 function Client({username, userProfile, isCurrentUser = false}) {
   console.log('🔹 Client component received:', { username, userProfile, isCurrentUser }); // Debug log
@@ -14,7 +15,7 @@ function Client({username, userProfile, isCurrentUser = false}) {
     
     // If it's a Google URL, use our proxy to avoid CORS issues
     if (pictureUrl.includes('googleusercontent.com')) {
-      const proxyUrl = `http://localhost:5001/api/profile-image?url=${encodeURIComponent(pictureUrl)}`;
+      const proxyUrl = `${config.SERVER_URL}/api/profile-image?url=${encodeURIComponent(pictureUrl)}`;
       console.log('🔹 Using proxy URL:', proxyUrl);
       return proxyUrl;
     }
