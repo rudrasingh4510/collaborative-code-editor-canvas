@@ -8,9 +8,10 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run dev",
     "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "postinstall": "cd client && npm run build"
+    "build": "npm run install-deps && cd client && npm run build",
+    "install-deps": "cd server && npm install && cd ../client && npm install",
+    "install-all": "npm install && npm run install-deps",
+    "postinstall": "npm run install-deps && cd client && npm run build"
   },
   "keywords": ["realtime", "code-editor", "collaborative", "canvas"],
   "author": "Rudra Singh",
